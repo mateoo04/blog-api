@@ -19,7 +19,7 @@ model User{
   lastName String
   email String @unique
   password String
-  isAuthor Boolean @default(false)
+  isAdmin Boolean @default(false)
   posts Post[]
   comments Comment[]
 }
