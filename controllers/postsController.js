@@ -71,10 +71,9 @@ async function update(req, res, next) {
         id: req.params.id,
       },
       data: {
-        title,
-        content,
-        authorId: req.user.id,
-        isPublished,
+        title: title ? title : undefined,
+        content: content ? content : undefined,
+        isPublished: isPublished ? isPublished : undefined,
       },
     });
 

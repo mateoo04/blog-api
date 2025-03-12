@@ -32,6 +32,7 @@ model Post{
   author User @relation(fields: [authorId], references: [id])
   isPublished Boolean @default(false)
   date DateTime @default(now())
+  comments Comment[]
 }
 
 model Comment{
@@ -40,4 +41,6 @@ model Comment{
   userId String
   user User @relation(fields: [userId], references: [id])
   date DateTime @default(now())
+  postId String
+  post Post @relation(fields: [postId], references: [id])
 }
