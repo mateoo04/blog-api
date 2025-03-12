@@ -1,15 +1,19 @@
 require('dotenv').config();
 const express = require('express');
-const authRouter = require('./routes/authRouter');
+
+const passport = require('./config/passport');
+const indexRouter = require('./routes/indexRouter');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(passport.initialize());
+
 app.get('/', (req, res) => res.json({ message: 'Hello' }));
 
-app.use('/auth', authRouter);
+app.use('/api', indexRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);
