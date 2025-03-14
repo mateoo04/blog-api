@@ -9,11 +9,7 @@ const indexRouter = Router();
 
 indexRouter.use('/auth', authRouter);
 
-indexRouter.use(
-  '/posts',
-  passport.authenticate('jwt', { session: false }),
-  postsRouter
-);
+indexRouter.use('/posts', postsRouter);
 
 indexRouter.use(
   '/comments',

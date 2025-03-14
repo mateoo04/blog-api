@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const passport = require('../config/passport');
 const {
   getAll,
   getById,
@@ -13,10 +14,25 @@ const postsRouter = Router();
 postsRouter.get('/', getAll);
 postsRouter.get('/:id', getById);
 
-postsRouter.post('/', authorizeAdmin, create);
+postsRouter.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  authorizeAdmin,
+  create
+);
 
-postsRouter.put('/:id', authorizeAdmin, update);
+postsRouter.put(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  authorizeAdmin,
+  update
+);
 
-postsRouter.delete('/:id', authorizeAdmin, deleteById);
+postsRouter.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  authorizeAdmin,
+  deleteById
+);
 
 module.exports = postsRouter;

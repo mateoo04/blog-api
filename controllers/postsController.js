@@ -17,6 +17,13 @@ async function getById(req, res, next) {
       where: {
         id: req.params.id,
       },
+      include: {
+        comments: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
 
     if (!post) {

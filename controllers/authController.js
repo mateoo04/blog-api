@@ -1,11 +1,18 @@
 const { issueJWT } = require('../lib/utils');
 const bcrypt = require('bcryptjs');
 const { PrismaClient } = require('@prisma/client');
-const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 const prisma = new PrismaClient();
 
 async function signUp(req, res, next) {
+  const errors = validationResult(req)
+    .array()
+    .map((error) => ({ field: error.path, message: error.msg }));
+  if (errors.length != 0) {
+    return res.status(400).json(errors);
+  }
+
   try {
     const userWithEnteredEmail = await prisma.user.findFirst({
       where: {
@@ -38,6 +45,13 @@ async function signUp(req, res, next) {
 }
 
 async function logIn(req, res, next) {
+  const errors = validationResult(req)
+    .array()
+    .map((error) => ({ field: error.path, message: error.msg }));
+  if (errors.length != 0) {
+    return res.status(400).json(errors);
+  }
+
   try {
     const user = await prisma.user.findUnique({
       where: {
