@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 
 const passport = require('./config/passport');
 const indexRouter = require('./routes/indexRouter');
@@ -9,7 +10,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('*', cors());
+
 app.use(passport.initialize());
+
+app.use((req, res, next) => {
+  console.log('Request incoming:', req.originalUrl, req.body);
+  next();
+});
 
 app.get('/', (req, res) => res.json({ message: 'Hello' }));
 

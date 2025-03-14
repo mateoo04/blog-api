@@ -46,7 +46,7 @@ async function logIn(req, res, next) {
     });
 
     if (!user) {
-      res.status(401).json('Invalid credentials');
+      return res.status(401).json('Invalid credentials');
     }
 
     const match = await bcrypt.compare(req.body.password, user.password);
