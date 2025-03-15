@@ -4,7 +4,14 @@ const prisma = new PrismaClient();
 
 async function getAll(req, res, next) {
   try {
-    const comments = await prisma.comment.findMany();
+    const comments = await prisma.comment.findMany({
+      where: {
+        postId: req.query?.postId || undefined,
+      },
+      include: {
+        user: true,
+      },
+    });
     return res.json({ comments });
   } catch (err) {
     next(err);
@@ -16,6 +23,9 @@ async function getById(req, res, next) {
     const comment = await prisma.comment.findUnique({
       where: {
         id: req.params.id,
+      },
+      include: {
+        user: true,
       },
     });
 
@@ -36,6 +46,9 @@ async function create(req, res, next) {
         content: req.body.content,
         postId: req.body.postId,
         userId: req.user.id,
+      },
+      include: {
+        user: true,
       },
     });
 

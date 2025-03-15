@@ -1,6 +1,5 @@
 const { Router } = require('express');
 
-const passport = require('../config/passport');
 const authRouter = require('../routes/authRouter');
 const postsRouter = require('../routes/postsRouter');
 const commentsRouter = require('../routes/commentsRouter');
@@ -11,10 +10,6 @@ indexRouter.use('/auth', authRouter);
 
 indexRouter.use('/posts', postsRouter);
 
-indexRouter.use(
-  '/comments',
-  passport.authenticate('jwt', { session: false }),
-  commentsRouter
-);
+indexRouter.use('/comments', commentsRouter);
 
 module.exports = indexRouter;

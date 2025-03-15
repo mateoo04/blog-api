@@ -33,6 +33,7 @@ model Post{
   isPublished Boolean @default(false)
   date DateTime @default(now())
   comments Comment[]
+  imageUrl String?
 }
 
 model Comment{

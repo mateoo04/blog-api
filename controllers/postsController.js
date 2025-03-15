@@ -4,7 +4,11 @@ const prisma = new PrismaClient();
 
 async function getAll(req, res, next) {
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      include: {
+        author: true,
+      },
+    });
     return res.json({ posts });
   } catch (err) {
     next(err);
@@ -23,6 +27,7 @@ async function getById(req, res, next) {
             user: true,
           },
         },
+        author: true,
       },
     });
 
@@ -38,7 +43,7 @@ async function getById(req, res, next) {
 
 async function create(req, res, next) {
   try {
-    const { title, content, isPublished } = req.body;
+    const { title, content, isPublished, imageUrl } = req.body;
 
     const post = await prisma.post.create({
       data: {
@@ -46,6 +51,7 @@ async function create(req, res, next) {
         content,
         authorId: req.user.id,
         isPublished,
+        imageUrl,
       },
     });
 

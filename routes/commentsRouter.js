@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const passport = require('../config/passport');
 const {
   getAll,
   getById,
@@ -13,10 +14,24 @@ const commentsRouter = Router();
 commentsRouter.get('/', getAll);
 commentsRouter.get('/:id', getById);
 
-commentsRouter.post('/', create);
+commentsRouter.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  create
+);
 
-commentsRouter.put('/:id', authorizeCommentEditing, update);
+commentsRouter.put(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  authorizeCommentEditing,
+  update
+);
 
-commentsRouter.delete('/:id', authorizeCommentEditing, deleteById);
+commentsRouter.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  authorizeCommentEditing,
+  deleteById
+);
 
 module.exports = commentsRouter;
