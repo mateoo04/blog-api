@@ -26,4 +26,12 @@ passport.use(
   })
 );
 
-module.exports = passport;
+const optionalAuth = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user) => {
+    if (err) next();
+    req.user = user || null;
+    next();
+  })(req, res, next);
+};
+
+module.exports = { passport, optionalAuth };

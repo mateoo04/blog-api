@@ -8,7 +8,11 @@ async function getAll(req, res, next) {
       include: {
         author: true,
       },
+      where: {
+        isPublished: req.user.isAdmin ? undefined : true,
+      },
     });
+
     return res.json({ posts });
   } catch (err) {
     next(err);

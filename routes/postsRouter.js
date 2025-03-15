@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const passport = require('../config/passport');
+const { passport, optionalAuth } = require('../config/passport');
 const {
   getAll,
   getById,
@@ -11,7 +11,7 @@ const { authorizeAdmin } = require('../middleware/authMiddleware');
 
 const postsRouter = Router();
 
-postsRouter.get('/', getAll);
+postsRouter.get('/', optionalAuth, getAll);
 postsRouter.get('/:id', getById);
 
 postsRouter.post(

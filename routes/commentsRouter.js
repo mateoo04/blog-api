@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const passport = require('../config/passport');
+const { passport } = require('../config/passport');
 const {
   getAll,
   getById,
