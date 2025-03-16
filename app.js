@@ -28,6 +28,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server listening on port ${process.env.PORT}!`)
+app.listen(process.env.PORT || 4000, () =>
+  console.log(`Server listening on port ${process.env.PORT || 4000}!`)
 );
