@@ -71,6 +71,12 @@ async function create(req, res, next) {
 
 async function deleteById(req, res, next) {
   try {
+    await prisma.comment.deleteMany({
+      where: {
+        postId: req.params.id,
+      },
+    });
+
     const post = await prisma.post.delete({
       where: {
         id: req.params.id,
@@ -85,7 +91,7 @@ async function deleteById(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const { title, content, isPublished } = req.body;
+    const { title, content, isPublished, imageUrl } = req.body;
 
     const post = await prisma.post.update({
       where: {
@@ -95,6 +101,7 @@ async function update(req, res, next) {
         title: title ? title : undefined,
         content: content ? content : undefined,
         isPublished: isPublished,
+        imageUrl: imageUrl ? imageUrl : undefined,
       },
       include: {
         author: true,
