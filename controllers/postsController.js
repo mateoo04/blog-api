@@ -7,9 +7,13 @@ async function getAll(req, res, next) {
     const posts = await prisma.post.findMany({
       include: {
         author: true,
+        comments: true,
       },
       where: {
-        isPublished: req.user.isAdmin ? undefined : true,
+        isPublished: req.user?.isAdmin ? undefined : true,
+      },
+      orderBy: {
+        date: 'desc',
       },
     });
 
@@ -90,7 +94,10 @@ async function update(req, res, next) {
       data: {
         title: title ? title : undefined,
         content: content ? content : undefined,
-        isPublished: isPublished ? isPublished : undefined,
+        isPublished: isPublished,
+      },
+      include: {
+        author: true,
       },
     });
 

@@ -11,7 +11,11 @@ async function getAll(req, res, next) {
       include: {
         user: true,
       },
+      orderBy: {
+        date: 'desc',
+      },
     });
+
     return res.json({ comments });
   } catch (err) {
     next(err);
@@ -64,6 +68,9 @@ async function deleteById(req, res, next) {
       where: {
         id: req.params.id,
       },
+      include: {
+        user: true,
+      },
     });
 
     return res.status(200).json({ message: 'Comment deleted', comment });
@@ -80,6 +87,9 @@ async function update(req, res, next) {
       },
       data: {
         content: req.body.content,
+      },
+      include: {
+        user: true,
       },
     });
 

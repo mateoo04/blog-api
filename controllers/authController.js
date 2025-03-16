@@ -44,7 +44,7 @@ async function signUp(req, res, next) {
   }
 }
 
-async function logIn(req, res, next) {
+async function logIn(req, res, next, isAdminRequired) {
   const errors = validationResult(req)
     .array()
     .map((error) => ({ field: error.path, message: error.msg }));
@@ -60,6 +60,10 @@ async function logIn(req, res, next) {
     });
 
     if (!user) {
+      return res.status(401).json('Invalid credentials');
+    }
+
+    if (isAdminRequired && !user.isAdmin) {
       return res.status(401).json('Invalid credentials');
     }
 
