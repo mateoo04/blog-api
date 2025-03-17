@@ -15,11 +15,11 @@ app.use('*', cors());
 app.use(passport.initialize());
 
 app.use((req, res, next) => {
-  console.log('Request incoming:', req.originalUrl, req.body);
+  console.log('Request incoming:', req.originalUrl);
   next();
 });
 
-app.get('/', (req, res) => res.json({ message: 'Hello' }));
+app.get('/', (req, res) => res.json({ message: 'Welcome to the Blog API!' }));
 
 app.use('/api', indexRouter);
 
